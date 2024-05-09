@@ -1,10 +1,10 @@
-//#include "glad/glad.h"
 #include <GLFW/glfw3.h> // Para la ventana y el manejo de eventos (GLFW)
 #include <cmath>
 #include <iostream>
+//#include "glad/glad.h"
 #include <math.h>
 #include <random>
-
+#define Pi 3.14159f
 float circleRadius = 50.0f; // Radio base
 
 class Dibujo {
@@ -12,9 +12,9 @@ public:
     static void drawCircle(float radius) {
         glBegin(GL_TRIANGLE_FAN);
         glVertex2f(0.0f, 0.0f); // punto centro del circulo
-        glColor3f(0.2,0.2,0.2);
+        glColor3f(0.0,0.0,1.0);
         for (int i = 0; i <= 360; i++) {
-            float angle = 3.14159f * i / 180.0f; //Convierte a radianes
+            float angle =  Pi * i / 180.0f; //Convierte a radianes
             glVertex2f(radius * cos(angle), radius * sin(angle));
         }
         glEnd();
@@ -67,16 +67,23 @@ int main() {
         glfwTerminate();
         return -1;
     }
-                                              //ventana como actual
+
+    //ventana como actual
     glfwMakeContextCurrent(window);
-                                             // Configura el callback de teclado
+
+    // Configura el callback de teclado
     glfwSetKeyCallback(window, keyboard);
 
     while (!glfwWindowShouldClose(window)) {
         // Renderiza la pantalla
         Pantalla::display(window);
+
+        // Verifica y llama a los eventos
         glfwPollEvents();
     }
+
+    // Termina GLFW
     glfwTerminate();
+
     return 0;
 }
